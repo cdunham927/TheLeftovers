@@ -8,6 +8,7 @@ public class Character : MonoBehaviour
     private int cur_health = 12;
     [SerializeField]
     private int max_health = 12;
+    public GameController gm;
 
     public int getHealth() {
         return cur_health;
@@ -31,7 +32,7 @@ public class Character : MonoBehaviour
         cur_health -= d;
         if(cur_health <= 0) {
             cur_health = 0;
-            //gamecontroller.hasDied();
+            gm.Die();
         }
         return;
     }
@@ -44,15 +45,8 @@ public class Character : MonoBehaviour
         return;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        gm.handleCheckpoint(ref col);
     }
 }
