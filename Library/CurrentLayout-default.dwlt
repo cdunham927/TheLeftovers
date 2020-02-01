@@ -22,8 +22,12 @@ MonoBehaviour:
   m_Title: 
   m_RootView: {fileID: 6}
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_MinSize: {x: 875, y: 542}
 >>>>>>> 81990fbd8a163162a260c5b6def28557edc694aa
+=======
+  m_MinSize: {x: 875, y: 392}
+>>>>>>> parent of cda42e7... Merge branch 'master' of https://github.com/cdunham927/TheLeftovers
 =======
   m_MinSize: {x: 875, y: 392}
 >>>>>>> parent of cda42e7... Merge branch 'master' of https://github.com/cdunham927/TheLeftovers
@@ -55,10 +59,14 @@ MonoBehaviour:
   vertical: 0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   controlID: 72
 --- !u!114 &6
 =======
   controlID: 122
+=======
+  controlID: 62
+>>>>>>> parent of cda42e7... Merge branch 'master' of https://github.com/cdunham927/TheLeftovers
 =======
   controlID: 62
 >>>>>>> parent of cda42e7... Merge branch 'master' of https://github.com/cdunham927/TheLeftovers
@@ -365,8 +373,12 @@ MonoBehaviour:
     m_SelectedIDs: 94340000
     m_LastClickedID: 13460
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_ExpandedIDs: 000000008e34000000ca9a3b
 >>>>>>> 81990fbd8a163162a260c5b6def28557edc694aa
+=======
+    m_ExpandedIDs: 000000008a340000
+>>>>>>> parent of cda42e7... Merge branch 'master' of https://github.com/cdunham927/TheLeftovers
 =======
     m_ExpandedIDs: 000000008a340000
 >>>>>>> parent of cda42e7... Merge branch 'master' of https://github.com/cdunham927/TheLeftovers
@@ -399,10 +411,14 @@ MonoBehaviour:
     m_LastClickedID: 0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_ExpandedIDs: 00000000a0340000
 =======
     m_ExpandedIDs: 000000008e340000
 >>>>>>> 81990fbd8a163162a260c5b6def28557edc694aa
+=======
+    m_ExpandedIDs: 000000008a340000
+>>>>>>> parent of cda42e7... Merge branch 'master' of https://github.com/cdunham927/TheLeftovers
 =======
     m_ExpandedIDs: 000000008a340000
 >>>>>>> parent of cda42e7... Merge branch 'master' of https://github.com/cdunham927/TheLeftovers
@@ -592,6 +608,7 @@ MonoBehaviour:
   m_Position:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Target: {x: -0.33757076, y: -0.3169861, z: -0.5847754}
     speed: 2
     m_Value: {x: -0.33757076, y: -0.3169861, z: -0.5847754}
@@ -600,6 +617,11 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: -0.9825163, y: -0.95632744, z: -42.265926}
 >>>>>>> 81990fbd8a163162a260c5b6def28557edc694aa
+=======
+    m_Target: {x: -8.973025, y: 2.5762663, z: -47.863327}
+    speed: 2
+    m_Value: {x: -8.973025, y: 2.5762663, z: -47.863327}
+>>>>>>> parent of cda42e7... Merge branch 'master' of https://github.com/cdunham927/TheLeftovers
 =======
     m_Target: {x: -8.973025, y: 2.5762663, z: -47.863327}
     speed: 2
@@ -656,6 +678,7 @@ MonoBehaviour:
   m_Size:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Target: 4.6450243
     speed: 2
     m_Value: 4.6450243
@@ -664,6 +687,11 @@ MonoBehaviour:
     speed: 2
     m_Value: 6.4191494
 >>>>>>> 81990fbd8a163162a260c5b6def28557edc694aa
+=======
+    m_Target: 8.502911
+    speed: 2
+    m_Value: 8.502911
+>>>>>>> parent of cda42e7... Merge branch 'master' of https://github.com/cdunham927/TheLeftovers
 =======
     m_Target: 8.502911
     speed: 2
