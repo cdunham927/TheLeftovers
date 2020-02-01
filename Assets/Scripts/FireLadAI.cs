@@ -47,7 +47,6 @@ public class FireLadAI : MonoBehaviour
                 //do idle behavior
                 break;
             case FireLadStates.Tracking:
-                //track player and attack
                 break;
             default:
                 break;
