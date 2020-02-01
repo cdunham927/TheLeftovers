@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/RickScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/MainMenu.unity
+    guid: 5c81b8b5dacc0814fb23a90b30b5624d
+  - enabled: 1
+    path: Assets/Scenes/ColeScene.unity
+    guid: d0220a4759d9b8d4f9f4630006b80d2b
   m_configObjects: {}
