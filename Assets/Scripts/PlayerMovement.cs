@@ -8,7 +8,9 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 1f;
     public float jumpSpeed = 10f;
     Rigidbody2D bod;
-
+    Animator anim;
+    SpriteRenderer rend;
+    Character play;
 
     public Vector2 boxRayCast;
     public float box;
@@ -18,11 +20,21 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         bod = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        rend = GetComponent<SpriteRenderer>();
+        play = GetComponent<Character>();
     }
 
     void Update()
     {
         float h = Input.GetAxisRaw("Horizontal");
+
+        if (h != 0)
+        {
+            anim.SetBool("run", true);
+            rend.flipX = (h > 0) ? true : false;
+        }
+        else anim.SetBool("run", false);
 
         bod.AddForce(new Vector2(h * speed * Time.deltaTime, 0));
 
@@ -36,6 +48,17 @@ public class PlayerMovement : MonoBehaviour
             grounded = true;
         }
         else grounded = false;
+
+        if (Application.isEditor)
+        {
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                if (play.getHealth() > 0) play.takeDamage(1);
+            }
+        }
+
+        anim.SetBool("grounded", grounded);
+        anim.SetBool("death", (play.getHealth() > 0) ? false : true);
     }
     private void OnDrawGizmos()
     {

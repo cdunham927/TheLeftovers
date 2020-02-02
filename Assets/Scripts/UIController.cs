@@ -19,6 +19,7 @@ public class UIController : MonoBehaviour
     public Image[] healthImages;
 
     //Get hp reference
+    Character play;
     [Range(0, 12)]
     public int amt = 12;
 
@@ -33,6 +34,11 @@ public class UIController : MonoBehaviour
     [Range(0, 1)]
     public int weapon = 0;
 
+    private void Awake()
+    {
+        play = GetComponent<Character>();
+    }
+
     public void UpdateHealth()
     {
         //Health combinations
@@ -41,7 +47,7 @@ public class UIController : MonoBehaviour
         //2nd health bar - 5-8
         //3rd health bar - 9-12
 
-        switch(amt)
+        switch(play.getHealth())
         {
             case 0:
                 //Dead
