@@ -21,7 +21,7 @@ public class CloudLadAI : EnemyAI
     public float currentRoamSpeed;
 
     //jump
-    public float jumpStrength = 0.2f;
+    public float jumpStrength = 3f;
     public bool grounded;
 
     public SpriteRenderer rend;
@@ -67,11 +67,11 @@ public class CloudLadAI : EnemyAI
     // Update is called once per frame
     void Update()
     {
-        RaycastHit2D floorHit = Physics2D.Raycast(transform.position, new Vector2(0, -1f), 1f, environmentMask);
+        RaycastHit2D floorHit = Physics2D.Raycast(transform.position, new Vector2(0, -10f), 1f, environmentMask);
         RaycastHit2D playerHit = Physics2D.Raycast(transform.position, new Vector2(0, -1f), 1f, playerMask);
         if (floorHit.collider != null | playerHit.collider != null)
         {
-            if (floorHit.distance < 0.01f | playerHit.distance < 0.01f)
+            if (floorHit.distance < 10f | playerHit.distance < 0.01f)
             {
                 grounded = true;
             }

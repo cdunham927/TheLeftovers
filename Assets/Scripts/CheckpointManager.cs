@@ -63,7 +63,7 @@ public class CheckpointManager : MonoBehaviour
                 enemies[i].SetActive(false);
             }
         }
-
+        Debug.Log("Tried to restart");
         play.setHealth(play.getMaxHealth());
     }
 

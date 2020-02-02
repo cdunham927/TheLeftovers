@@ -19,18 +19,30 @@ public class EnemyAI : MonoBehaviour
     public float potionSpawnChance;
     public GameObject potion;
 
+    public string EnemyType;
+
     public Collider2D coll;
     public Transform parent;
-    public Rigidbody2D bod;
+
+    //sound
+    public AudioSource takeDamageSound;
+
+    void Awake()
+    {
+        coll = GetComponent<Collider2D>();
+        gm = FindObjectOfType<CheckpointManager>();
+        orig_position = transform.position;
+    }
 
     public void TakeDamage(int amt)
     {
         health -= amt;
+        GameObject.Find("GameController").GetComponent<AudioManager>().enemyTakeDamage(EnemyType);
     }
 
     public void Die()
     {
-        FindObjectOfType<CheckpointManager>().EnemyDie(index);
+        gm.EnemyDie(index);
         if (Random.value < potionSpawnChance)
         {
             Instantiate(potion, transform.position, transform.rotation * Quaternion.Euler(0, 0, Random.Range(0, 360)));
@@ -39,8 +51,7 @@ public class EnemyAI : MonoBehaviour
 
     public void reinitialize()
     {
-        bod.velocity = Vector2.zero;
-        parent.position = orig_position;
+        transform.position = orig_position;
         health = maxHealth;
     }
 

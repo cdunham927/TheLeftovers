@@ -64,10 +64,13 @@
   <ItemGroup>
     <Compile Include="Assets\AttackableObstacle.cs" />
     <Compile Include="Assets\Scripts\AimAtMouse.cs" />
+    <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
     <Compile Include="Assets\Scripts\CheckpointManager.cs" />
+    <Compile Include="Assets\Scripts\CloudBossAI.cs" />
     <Compile Include="Assets\Scripts\CloudLadAI.cs" />
+    <Compile Include="Assets\Scripts\EarthBossAI.cs" />
     <Compile Include="Assets\Scripts\EarthLadAI.cs" />
     <Compile Include="Assets\Scripts\EnemyAI.cs" />
     <Compile Include="Assets\Scripts\FireBabies.cs" />
@@ -81,6 +84,7 @@
     <Compile Include="Assets\Scripts\Rotate.cs" />
     <Compile Include="Assets\Scripts\SpellDamage.cs" />
     <Compile Include="Assets\Scripts\UIController.cs" />
+    <Compile Include="Assets\Scripts\WaterBossAI.cs" />
     <Compile Include="Assets\Scripts\WaterLadAI.cs" />
     <Compile Include="Assets\ScriptsMaxt\CheckRange.cs" />
     <Compile Include="Assets\ScriptsMaxt\MoveSpell.cs" />

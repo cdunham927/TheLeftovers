@@ -35,7 +35,7 @@ public class FireBabies : EnemyAI
     void Awake()
     {
         player = FindObjectOfType<PlayerAction>().transform;
-        coll = GetComponent<Collider2D>();
+        //coll = GetComponent<Collider2D>();
     }
 
     public enemyStates enemyState = enemyStates.Idle;
