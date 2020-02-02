@@ -5,48 +5,53 @@ using UnityEngine;
 public class FireLadAI : EnemyAI
 {
     public Transform player;
-    public GameObject fireLad;
-    public SpriteRenderer rend;
+    public GameObject enemy;
     public LayerMask environmentMask;
-    public float detectionRange;
-    public float moveSpeed;
-    public int attackStrength;
+    public LayerMask playerMask;
+    public float detectionRange = 7f;
+    public float moveSpeed = 3f;
+
+    public int attackStrength = 1;
 
     //Roaming behavior when idle
-    public int minRoamTime; //seconds
-    public int maxRoamTime; //seconds
-    public int jumpChance; //modulo value
+    public int minRoamTime = 2; //seconds
+    public int maxRoamTime = 2; //seconds
     private int currentRoamTime;
     private float idleTimer;
     public float currentRoamSpeed;
 
-    //Tracking movement
-    public int turnTime; //seconds
-
     //jump
-    public int jumpStrength;
-    private bool grounded;
-    public Vector2 boxCast;
-    public float box;
+    public float jumpStrength = 0.2f;
+    public bool grounded;
 
-    public enum FireLadStates
+    public SpriteRenderer rend;
+
+    public enum enemyStates
     {
         Idle = 0,
         Tracking = 1
     };
+  
+    void Awake()
+    {
+        player = FindObjectOfType<PlayerAction>().transform;
+        coll = GetComponent<Collider2D>();
+        gm = FindObjectOfType<CheckpointManager>();
+        orig_position = parent.transform.position;
+    }
 
-    public FireLadStates FireLadState = FireLadStates.Idle;
+    public enemyStates enemyState = enemyStates.Idle;
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.gameObject.name == player.name)
         {
             player.GetComponent<Character>().takeDamage(attackStrength);
-            //Debug.Log("Fire Lad hit the player");
-            //place function here to make player take damage
+            player.GetComponent<Rigidbody2D>().AddForce(new Vector2(moveSpeed / 2, 3), ForceMode2D.Impulse);
+            //Debug.Log(enemy.name + " hit " + player.name + " for " + attackStrength + " damage. " + player.name + " has " + player.GetComponent<Character>().getHealth() + " health remaining.");
         }
     }
-    
+
     void OnEnable()
     {
         currentRoamTime = Random.Range(minRoamTime, maxRoamTime);
@@ -62,34 +67,41 @@ public class FireLadAI : EnemyAI
     // Update is called once per frame
     void Update()
     {
-        Collider2D boxHit;
-        if (boxHit = Physics2D.OverlapBox(fireLad.transform.position, boxCast, 0f, environmentMask))
+        RaycastHit2D floorHit = Physics2D.Raycast(transform.position, new Vector2(0, -1f), 1f, environmentMask);
+        RaycastHit2D playerHit = Physics2D.Raycast(transform.position, new Vector2(0, -1f), 1f, playerMask);
+        if (floorHit.collider != null | playerHit.collider != null)
         {
-            grounded = true;
+            if (floorHit.distance < 0.01f | playerHit.distance < 0.01f)
+            {
+                grounded = true;
+            }
         }
         else
         {
             grounded = false;
         }
 
-        switch (FireLadState)
+        if (health <= 0) Die();
+
+        switch (enemyState)
         { //transitions
-            case FireLadStates.Idle:
-                if (Vector3.SqrMagnitude(player.position - fireLad.transform.position) <= detectionRange * detectionRange)
+            case enemyStates.Idle:
+                if (Vector3.SqrMagnitude(player.position - enemy.transform.position) <= detectionRange * detectionRange)
                 {
-                    FireLadState = FireLadStates.Tracking;
+                    enemyState = enemyStates.Tracking;
                     //Debug.Log("Fire Lad sees the player, now tracking.");
                 }
                 break;
-            case FireLadStates.Tracking:
-                if (Vector3.SqrMagnitude(player.position - fireLad.transform.position) > detectionRange * detectionRange)
+            case enemyStates.Tracking:
+                if (Vector3.SqrMagnitude(player.position - enemy.transform.position) > detectionRange * detectionRange)
                 {
-                    FireLadState = FireLadStates.Idle;
+                    enemyState = enemyStates.Idle;
                     idleTimer = 0f;
                     //Debug.Log("Fire Lad doesn't see the player, now idle.");
                 }
                 break;
             default:
+                enemyState = enemyStates.Idle;
                 break;
         }
 
@@ -101,13 +113,11 @@ public class FireLadAI : EnemyAI
             }
         }
 
-        if (health < 1) Die();
-
-        switch (FireLadState)
+        switch (enemyState)
         { //actions
-            case FireLadStates.Idle:
+            case enemyStates.Idle:
                 idleTimer += Time.deltaTime;
-                if (idleTimer >= currentRoamTime)
+                if (idleTimer >= currentRoamTime && grounded)
                 {
                     currentRoamSpeed *= -1; //switch direction
                     idleTimer = 0f;
@@ -120,14 +130,16 @@ public class FireLadAI : EnemyAI
                     Vector2 raycastDirection = new Vector2(0, 0);
                     if (currentRoamSpeed > 0)
                     {
+                        rend.flipX = true;
                         raycastDirection = new Vector2(1f, 0); //right
                     }
                     else
                     {
+                        rend.flipX = false;
                         raycastDirection = new Vector2(-1f, 0); //left
                     }
-                    rayHit = Physics2D.Raycast(fireLad.transform.position, raycastDirection, 1f, environmentMask);
-                    //Debug.DrawLine(fireLad.transform.position, fireLad.transform.position + (Vector3)raycastDirection, Color.red);
+                    rayHit = Physics2D.Raycast(enemy.transform.position, raycastDirection, 1f, environmentMask);
+                    //Debug.DrawLine(enemy.transform.position, enemy.transform.position + (Vector3)raycastDirection, Color.red);
                     if (rayHit.collider != null)
                     {
                         if (rayHit.distance < 0.5f)
@@ -137,46 +149,37 @@ public class FireLadAI : EnemyAI
                             currentRoamTime = Random.Range(minRoamTime, maxRoamTime);
                         }
                     }
-
-                    fireLad.transform.position += new Vector3(currentRoamSpeed * Time.deltaTime, 0, 0);
                 }
-
-                //only allow jumping while on floor
-                /*
-                Vector2 boxcastDirection = new Vector2(0, -1f);
-                RaycastHit2D Boxcast2D
-                boxHit = Physics2D.BoxCast(fireLad.transform.position, boxcastDirection, 1f, (1 << 8));
-                if (boxHit.collider != null) { //jump while on floor
-                    if (boxHit.distance < 0.1f) {
-                        
-                    }
-                }
-                */
 
                 if (grounded)
                 { //can jump
-                    //fireLad.GetComponent<Rigidbody2D>().AddForce(fireLad.transform.up * jumpStrength, ForceMode2D.Impulse); //jump
+                    enemy.GetComponent<Rigidbody2D>().AddForce(enemy.transform.up * jumpStrength, ForceMode2D.Impulse); //jump
+                    enemy.GetComponent<Rigidbody2D>().AddForce(enemy.transform.right * currentRoamSpeed); //move
                 }
 
                 break;
-            case FireLadStates.Tracking:
-                //track player and attack
-                if (player.transform.position.x > fireLad.transform.position.x)
+            case enemyStates.Tracking:
+                //track player
+                if (grounded)
                 {
-                    //Debug.Log("Player is to the right of Fire Lad");
-                    fireLad.transform.position += new Vector3(moveSpeed * Time.deltaTime, 0, 0);
-                }
-                else if (player.transform.position.x < fireLad.transform.position.x)
-                {
-                    //Debug.Log("Player is to the left of Fire Lad");
-                    fireLad.transform.position += new Vector3(-1 * moveSpeed * Time.deltaTime, 0, 0);
+                    if (player.transform.position.x > enemy.transform.position.x)
+                    {
+                        rend.flipX = true;
+                        //Debug.Log("Player is to the right of Fire Lad");
+                        enemy.GetComponent<Rigidbody2D>().AddForce(enemy.transform.right * moveSpeed); //move
+                        if (moveSpeed <= 0) { moveSpeed *= -1; }
+                    }
+                    else if (player.transform.position.x < enemy.transform.position.x)
+                    {
+                        rend.flipX = false;
+                        //Debug.Log("Player is to the left of Fire Lad");
+                        //enemy.transform.position += new Vector3(-1 * moveSpeed * Time.deltaTime, 0, 0);
+                        enemy.GetComponent<Rigidbody2D>().AddForce(enemy.transform.right * moveSpeed); //move
+                        if (moveSpeed > 0) { moveSpeed *= -1; }
+                    }
+                    enemy.GetComponent<Rigidbody2D>().AddForce(enemy.transform.up * jumpStrength, ForceMode2D.Impulse); //jump
                 }
 
-                /*
-                if (player.transform.position.y > fireLad.transform.position.y) {
-                    //jump
-                }
-                */
                 break;
             default:
                 break;

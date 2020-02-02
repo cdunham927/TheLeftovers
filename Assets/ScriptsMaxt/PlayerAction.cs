@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerAction : MonoBehaviour
 {
@@ -38,6 +39,9 @@ public class PlayerAction : MonoBehaviour
 
     public GameObject book;
     public Material[] materials;
+
+    public Image cooldownImage;
+    public float lerpSpd = 7.5f;
 
     //AUDIO
     AudioSource src;
@@ -107,10 +111,13 @@ public class PlayerAction : MonoBehaviour
             Attack(firePointPos, (mousePos - firePointPos), angel);
             //after firing, set cool down time back to default;
             lastTime = Time.time;
+            //cooldownImage.fillAmount - 0f;
         }
 
+        cooldownImage.fillAmount = Mathf.Lerp(cooldownImage.fillAmount, ((Time.time - lastTime) / weaponList[currWeapon].coolDown), lerpSpd * Time.deltaTime);
+
         //deal with picking up
-        if(ableToPickUp == true && Input.GetKeyDown(KeyCode.E))
+        if (ableToPickUp == true && Input.GetKeyDown(KeyCode.E))
         {
             GameObject spellToPick = GameObject.FindGameObjectWithTag("Spell");
             PickUpSpell(spellToPick);
@@ -176,7 +183,7 @@ public class PlayerAction : MonoBehaviour
     {
         switch (spellToPick.name)
         {
-            case "FireBallScroll":
+            case "FireBallScroll(Clone)":
                 book.SetActive(true);
                 book.GetComponentInChildren<Renderer>().material = materials[0];
                 Invoke("StopBook", 1f);
@@ -184,7 +191,7 @@ public class PlayerAction : MonoBehaviour
                 unlockedWeapons.Add(1);
                 unlockedWeapons.Sort();
                 break;
-            case "LightningScroll":
+            case "LightningScroll(Clone)":
                 book.SetActive(true);
                 book.GetComponentInChildren<Renderer>().material = materials[1];
                 Invoke("StopBook", 1f);
@@ -192,7 +199,7 @@ public class PlayerAction : MonoBehaviour
                 unlockedWeapons.Add(2);
                 unlockedWeapons.Sort();
                 break;
-            case "IceScroll":
+            case "IceScroll(Clone)":
                 book.SetActive(true);
                 book.GetComponentInChildren<Renderer>().material = materials[2];
                 Invoke("StopBook", 1f);
@@ -200,7 +207,7 @@ public class PlayerAction : MonoBehaviour
                 unlockedWeapons.Add(3);
                 unlockedWeapons.Sort();
                 break;
-            case "WaterScroll":
+            case "WaterScroll(Clone)":
                 book.SetActive(true);
                 book.GetComponentInChildren<Renderer>().material = materials[3];
                 Invoke("StopBook", 1f);

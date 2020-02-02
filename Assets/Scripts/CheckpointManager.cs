@@ -23,7 +23,7 @@ public class CheckpointManager : MonoBehaviour
         for(int i = 0; i < enemies.Count; i++)
         {
             hasDied[i] = false;
-            var enemyai = enemies[i].GetComponent<EnemyAI>();
+            var enemyai = enemies[i].GetComponentInChildren<EnemyAI>();
             enemyai.setIndex(i);
         }
     }
@@ -52,7 +52,7 @@ public class CheckpointManager : MonoBehaviour
             {
                 enemies[i].SetActive(true);
             }
-            var enemyai = enemies[i].GetComponent<EnemyAI>();
+            var enemyai = enemies[i].GetComponentInChildren<EnemyAI>();
             if (enemyai.getEnemyCheckpoint() >= cur_checkpoint || !hasDied[i])
             {
                 enemyai.reinitialize();

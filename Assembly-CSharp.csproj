@@ -62,12 +62,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\AttackableObstacle.cs" />
+    <Compile Include="Assets\Scripts\AimAtMouse.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
     <Compile Include="Assets\Scripts\CheckpointManager.cs" />
+    <Compile Include="Assets\Scripts\CloudLadAI.cs" />
+    <Compile Include="Assets\Scripts\EarthLadAI.cs" />
     <Compile Include="Assets\Scripts\EnemyAI.cs" />
+    <Compile Include="Assets\Scripts\FireBabies.cs" />
     <Compile Include="Assets\Scripts\FireBossAI.cs" />
     <Compile Include="Assets\Scripts\FireLadAI.cs" />
+    <Compile Include="Assets\Scripts\IceLadAI.cs" />
     <Compile Include="Assets\Scripts\Menu.cs" />
     <Compile Include="Assets\Scripts\Pause.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
@@ -75,10 +81,12 @@
     <Compile Include="Assets\Scripts\Rotate.cs" />
     <Compile Include="Assets\Scripts\SpellDamage.cs" />
     <Compile Include="Assets\Scripts\UIController.cs" />
+    <Compile Include="Assets\Scripts\WaterLadAI.cs" />
     <Compile Include="Assets\ScriptsMaxt\CheckRange.cs" />
     <Compile Include="Assets\ScriptsMaxt\MoveSpell.cs" />
     <Compile Include="Assets\ScriptsMaxt\PlayerAction.cs" />
     <Compile Include="Assets\ScriptsMaxt\PlayerController.cs" />
+    <Compile Include="Assets\enemyAI.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Owner/Documents/GGJ2020/Global Game Jam 2020/TheLeftovers/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

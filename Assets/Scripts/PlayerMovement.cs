@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     public bool grounded;
     public LayerMask mask;
 
+    public GameObject projSpawn;
+
     private void Awake()
     {
         bod = GetComponent<Rigidbody2D>();
@@ -32,9 +34,12 @@ public class PlayerMovement : MonoBehaviour
         if (h != 0)
         {
             anim.SetBool("run", true);
-            rend.flipX = (h > 0) ? true : false;
         }
         else anim.SetBool("run", false);
+        Vector3 mousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+
+        rend.flipX = (mousePos.x > 0.5f) ? true : false;
+        projSpawn.transform.localPosition = new Vector3((mousePos.x > 0.5f) ? 0.25f : -0.25f, projSpawn.transform.localPosition.y, projSpawn.transform.localPosition.z);
 
         bod.AddForce(new Vector2(h * speed * Time.deltaTime, 0));
 

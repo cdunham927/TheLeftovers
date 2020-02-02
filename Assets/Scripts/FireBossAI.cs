@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FireBossAI : EnemyAI
 {
     public Transform player;
     public GameObject fireLad;
-    public SpriteRenderer rend;
     public LayerMask environmentMask;
     public float detectionRange;
     public float moveSpeed;
@@ -29,11 +29,28 @@ public class FireBossAI : EnemyAI
     public Vector2 boxCast;
     public float box;
 
+    public Image fireBossHp;
+    public GameObject hpParent;
+    public float bossfightDistance;
+    public float lerpSpd;
+    public GameObject scrollToDrop;
+
+    public GameObject babies;
+    [Range(1, 4)]
+    public int babiesToSpawn;
+
     public enum FireLadStates
     {
         Idle = 0,
         Tracking = 1
     };
+
+    void Awake()
+    {
+        coll = GetComponent<Collider2D>();
+        gm = FindObjectOfType<CheckpointManager>();
+        orig_position = parent.transform.position;
+    }
 
     public FireLadStates FireLadState = FireLadStates.Idle;
 
@@ -72,6 +89,10 @@ public class FireBossAI : EnemyAI
             grounded = false;
         }
 
+        //sr.flipX = (currentRoamSpeed > 0) ? true : false;
+        hpParent.SetActive((Vector3.SqrMagnitude(player.position - transform.position) <= bossfightDistance) ? true : false);
+        fireBossHp.fillAmount = Mathf.Lerp(fireBossHp.fillAmount, (float)health / (float)maxHealth, lerpSpd * Time.deltaTime);
+
         switch (FireLadState)
         { //transitions
             case FireLadStates.Idle:
@@ -101,7 +122,17 @@ public class FireBossAI : EnemyAI
             }
         }
 
-        if (health < 1) Die();
+        if (health < 1) {
+            hpParent.SetActive(false);
+            Instantiate(scrollToDrop, transform.position, Quaternion.identity);
+
+            for (int i = 0; i < babiesToSpawn; i++)
+            {
+                Instantiate(babies, transform.position + new Vector3((i * 3) - 3, Random.Range(0, 2), 0), Quaternion.identity);
+            }
+
+            Die();
+        }
 
         switch (FireLadState)
         { //actions
@@ -163,11 +194,13 @@ public class FireBossAI : EnemyAI
                 //track player and attack
                 if (player.transform.position.x > fireLad.transform.position.x)
                 {
+                    sr.flipX = true;
                     //Debug.Log("Player is to the right of Fire Lad");
                     fireLad.transform.position += new Vector3(moveSpeed * Time.deltaTime, 0, 0);
                 }
                 else if (player.transform.position.x < fireLad.transform.position.x)
                 {
+                    sr.flipX = false;
                     //Debug.Log("Player is to the left of Fire Lad");
                     fireLad.transform.position += new Vector3(-1 * moveSpeed * Time.deltaTime, 0, 0);
                 }

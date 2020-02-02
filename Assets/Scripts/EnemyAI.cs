@@ -6,11 +6,11 @@ public class EnemyAI : MonoBehaviour
 {
     public SpriteRenderer sr;
     public CheckpointManager gm;
-    private Vector3 orig_position;
+    public Vector3 orig_position;
     [SerializeField]
-    private int checkpoint = default;
+    public int checkpoint = default;
     [SerializeField]
-    private int index; //used by gamemanager
+    public int index; //used by gamemanager
 
     public int maxHealth;
     public int health;
@@ -19,14 +19,9 @@ public class EnemyAI : MonoBehaviour
     public float potionSpawnChance;
     public GameObject potion;
 
-    Collider2D coll;
-
-    void Awake()
-    {
-        coll = GetComponent<Collider2D>();
-        gm = FindObjectOfType<CheckpointManager>();
-        orig_position = transform.position;
-    }
+    public Collider2D coll;
+    public Transform parent;
+    public Rigidbody2D bod;
 
     public void TakeDamage(int amt)
     {
@@ -35,7 +30,7 @@ public class EnemyAI : MonoBehaviour
 
     public void Die()
     {
-        gm.EnemyDie(index);
+        FindObjectOfType<CheckpointManager>().EnemyDie(index);
         if (Random.value < potionSpawnChance)
         {
             Instantiate(potion, transform.position, transform.rotation * Quaternion.Euler(0, 0, Random.Range(0, 360)));
@@ -44,7 +39,8 @@ public class EnemyAI : MonoBehaviour
 
     public void reinitialize()
     {
-        transform.position = orig_position;
+        bod.velocity = Vector2.zero;
+        parent.position = orig_position;
         health = maxHealth;
     }
 
