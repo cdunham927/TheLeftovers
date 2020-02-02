@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireLadAI : MonoBehaviour
+public class FireLadAI : EnemyAI
 {
     public Transform player;
     public GameObject fireLad;
@@ -10,9 +10,6 @@ public class FireLadAI : MonoBehaviour
     public LayerMask environmentMask;
     public float detectionRange;
     public float moveSpeed;
-
-    public int maxHealth;
-    public int health;
     public int attackStrength;
 
     //Roaming behavior when idle
@@ -49,11 +46,6 @@ public class FireLadAI : MonoBehaviour
             //place function here to make player take damage
         }
     }
-
-    public void TakeDamage(int amt)
-    {
-        health -= amt;
-    }
     
     void OnEnable()
     {
@@ -86,7 +78,7 @@ public class FireLadAI : MonoBehaviour
                 if (Vector3.SqrMagnitude(player.position - fireLad.transform.position) <= detectionRange * detectionRange)
                 {
                     FireLadState = FireLadStates.Tracking;
-                    Debug.Log("Fire Lad sees the player, now tracking.");
+                    //Debug.Log("Fire Lad sees the player, now tracking.");
                 }
                 break;
             case FireLadStates.Tracking:
@@ -94,7 +86,7 @@ public class FireLadAI : MonoBehaviour
                 {
                     FireLadState = FireLadStates.Idle;
                     idleTimer = 0f;
-                    Debug.Log("Fire Lad doesn't see the player, now idle.");
+                    //Debug.Log("Fire Lad doesn't see the player, now idle.");
                 }
                 break;
             default:
@@ -109,7 +101,7 @@ public class FireLadAI : MonoBehaviour
             }
         }
 
-        if (health < 1) gameObject.SetActive(false);
+        if (health < 1) Die();
 
         switch (FireLadState)
         { //actions

@@ -7,9 +7,9 @@ public class CheckRange : MonoBehaviour
     public Transform player;
     public float maxDistToPickUp = 5f;
 
-    private void Start()
+    private void Awake()
     {
-        if(player == null)
+        if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
@@ -23,9 +23,11 @@ public class CheckRange : MonoBehaviour
         if(distToPlayer <= maxDistToPickUp)
         {
             player.GetComponent<PlayerAction>().ableToPickUp = true;
+            transform.GetChild(0).gameObject.SetActive(true);
         } else
         {
             player.GetComponent<PlayerAction>().ableToPickUp = false;
+            transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 }

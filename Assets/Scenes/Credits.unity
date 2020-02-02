@@ -223,7 +223,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -304,7 +304,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -50}
+  m_AnchoredPosition: {x: 25, y: -50}
   m_SizeDelta: {x: 200, y: 325}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &665254830
@@ -338,11 +338,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Artists
+  m_Text: '<color=blue>Artists
 
-    Jon
+    <size=36>Jon Perez
 
-    Richard'
+    Richard Martinez</size></color>'
 --- !u!222 &665254831
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -600,17 +600,18 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Programmers
+  m_Text: '<color=red>Programmers
 
-    Cole
+    <size=36>Cole Dunham
 
-    Jesse
+    Jesse Mendoza
 
-    Alex
+    Xiaotian
+    Ma
 
-    Anthony
+    Anthony Soria
 
-    Rick'
+    Rick</size></color>'
 --- !u!222 &2000470177
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -653,7 +654,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 325, y: -50}
+  m_AnchoredPosition: {x: 350, y: -50}
   m_SizeDelta: {x: 200, y: 325}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2028410877
@@ -687,7 +688,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Audio \nEthan\nAudio Jesus"
+  m_Text: "<color=lime>Audio \n<size=36>Ethan El Bard\nAdam Wise</size></color>"
 --- !u!222 &2028410878
 CanvasRenderer:
   m_ObjectHideFlags: 0

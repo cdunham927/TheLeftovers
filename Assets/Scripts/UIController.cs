@@ -20,23 +20,24 @@ public class UIController : MonoBehaviour
 
     //Get hp reference
     Character play;
-    [Range(0, 12)]
-    public int amt = 12;
+    //[Range(0, 12)]
+    //public int amt = 12;
 
     //Weapon sprites
-    public Sprite defSprite;
-    public Sprite fireSprite;
+    public Sprite[] weaponSprites;
 
     //Current weapon UI
     public Image weaponImage;
 
     //Get weapon reference
-    [Range(0, 1)]
-    public int weapon = 0;
+    PlayerAction actions;
+    //[Range(0, 1)]
+    //public int weapon = 0;
 
     private void Awake()
     {
         play = GetComponent<Character>();
+        actions = GetComponent<PlayerAction>();
     }
 
     public void UpdateHealth()
@@ -121,15 +122,7 @@ public class UIController : MonoBehaviour
 
     public void UpdateWeapon()
     {
-        switch(weapon)
-        {
-            case 0:
-                weaponImage.sprite = defSprite;
-                break;
-            case 1:
-                weaponImage.sprite = fireSprite;
-                break;
-        }
+        weaponImage.sprite = weaponSprites[actions.currWeapon];
     }
 
     private void Update()

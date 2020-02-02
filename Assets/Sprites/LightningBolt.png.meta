@@ -1,7 +1,79 @@
 fileFormatVersion: 2
 guid: 10546db1b7e289c4babd6b3dd0c36fea
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -6278663978556736651
+    second: LightningBolt_0
+  - first:
+      213: -3367161271319429426
+    second: LightningBolt_1
+  - first:
+      213: -4856906298093138296
+    second: LightningBolt_2
+  - first:
+      213: -1531476392709230814
+    second: LightningBolt_3
+  - first:
+      213: -2266621665907121011
+    second: LightningBolt_4
+  - first:
+      213: -6912179747299553392
+    second: LightningBolt_5
+  - first:
+      213: -3274856220604481564
+    second: LightningBolt_6
+  - first:
+      213: 2471522844723295094
+    second: LightningBolt_7
+  - first:
+      213: 616405264716253483
+    second: LightningBolt_8
+  - first:
+      213: 5989973274402215670
+    second: LightningBolt_9
+  - first:
+      213: -8261826173669893943
+    second: LightningBolt_10
+  - first:
+      213: -6030608823443981075
+    second: LightningBolt_11
+  - first:
+      213: -7146416893529658142
+    second: LightningBolt_0
+  - first:
+      213: -106633934067436861
+    second: LightningBolt_1
+  - first:
+      213: -1515906693032257334
+    second: LightningBolt_2
+  - first:
+      213: 5819446706247099562
+    second: LightningBolt_3
+  - first:
+      213: -1852843290254483621
+    second: LightningBolt_4
+  - first:
+      213: 2368049933502175908
+    second: LightningBolt_5
+  - first:
+      213: 7756507273493195012
+    second: LightningBolt_6
+  - first:
+      213: -8756273980882326413
+    second: LightningBolt_7
+  - first:
+      213: -1615533392095135534
+    second: LightningBolt_8
+  - first:
+      213: 6430390035408750920
+    second: LightningBolt_9
+  - first:
+      213: 8236616649098607399
+    second: LightningBolt_10
+  - first:
+      213: -8359603186994618908
+    second: LightningBolt_11
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -40,12 +112,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 500
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -70,9 +142,273 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: LightningBolt_0
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 3805
+        width: 290
+        height: 257
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ec605cd2b3d2dc90800000000000000
+      internalID: -7146416893529658142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightningBolt_1
+      rect:
+        serializedVersion: 2
+        x: 1275
+        y: 3709
+        width: 292
+        height: 354
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c278ee7009258ef0800000000000000
+      internalID: -106633934067436861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightningBolt_2
+      rect:
+        serializedVersion: 2
+        x: 2301
+        y: 3613
+        width: 355
+        height: 451
+      alignment: 9
+      pivot: {x: 0.8144146, y: 0.99720675}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac8dc21f4ea66fae0800000000000000
+      internalID: -1515906693032257334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightningBolt_3
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 2399
+        width: 390
+        height: 641
+      alignment: 9
+      pivot: {x: 0.7409793, y: 0.99777645}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa4ec2352f3d2c050800000000000000
+      internalID: 5819446706247099562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightningBolt_4
+      rect:
+        serializedVersion: 2
+        x: 1276
+        y: 2365
+        width: 390
+        height: 676
+      alignment: 9
+      pivot: {x: 0.7451973, y: 0.9979389}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5f5ae328d06946e0800000000000000
+      internalID: -1852843290254483621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightningBolt_5
+      rect:
+        serializedVersion: 2
+        x: 2301
+        y: 2205
+        width: 389
+        height: 836
+      alignment: 9
+      pivot: {x: 0.7484663, y: 0.99753726}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4aad8c83ed00dd020800000000000000
+      internalID: 2368049933502175908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightningBolt_6
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 1149
+        width: 390
+        height: 866
+      alignment: 9
+      pivot: {x: 0.7451987, y: 0.9960601}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 409ab4ef446a4ab60800000000000000
+      internalID: 7756507273493195012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightningBolt_7
+      rect:
+        serializedVersion: 2
+        x: 1276
+        y: 1053
+        width: 390
+        height: 963
+      alignment: 9
+      pivot: {x: 0.7376543, y: 0.9980503}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37c638505377b7680800000000000000
+      internalID: -8756273980882326413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightningBolt_8
+      rect:
+        serializedVersion: 2
+        x: 2301
+        y: 1053
+        width: 390
+        height: 963
+      alignment: 9
+      pivot: {x: 0.7414263, y: 0.9995496}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d8336970f87499e0800000000000000
+      internalID: -1615533392095135534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightningBolt_9
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 450
+        height: 991
+      alignment: 9
+      pivot: {x: 0.6340419, y: 1.0002943}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84900c3eaa55d3950800000000000000
+      internalID: 6430390035408750920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightningBolt_10
+      rect:
+        serializedVersion: 2
+        x: 1277
+        y: 0
+        width: 518
+        height: 992
+      alignment: 9
+      pivot: {x: 0.5596429, y: 0.9968137}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72b3790f3375e4270800000000000000
+      internalID: 8236616649098607399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LightningBolt_11
+      rect:
+        serializedVersion: 2
+        x: 2205
+        y: 0
+        width: 678
+        height: 991
+      alignment: 9
+      pivot: {x: 0.56943715, y: 0.99880975}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ed56f74139bcfb80800000000000000
+      internalID: -8359603186994618908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

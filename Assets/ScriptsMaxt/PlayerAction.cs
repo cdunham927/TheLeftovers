@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class PlayerAction : MonoBehaviour
 {
-    public enum WeaponSlot { MAGICSPELL, FIREBALL, WATERSTREAM }
+    public enum WeaponSlot { MAGICSPELL, FIREBALL, LIGHTING, ICE, WATER }
     [System.Serializable]
     public struct Weapon
     {
         public WeaponSlot weapon;
         public bool ifUnlocked;
-        public Weapon(WeaponSlot weapon, bool ifUnlocked) { this.weapon = weapon; this.ifUnlocked = ifUnlocked; }
+        public float coolDown;
+        public Weapon(WeaponSlot weapon, bool ifUnlocked, float coolDown) { this.weapon = weapon; this.ifUnlocked = ifUnlocked; this.coolDown = coolDown; }
     }
 
     //curr weapon and weapon list
-    public int currWeapon = 0;
     public Weapon[] weaponList;
+    public int currWeapon = 0;
+    public List<int> unlockedWeapons;
+    private int indexUnlokedWeapon = 0;
 
     [HideInInspector]
     public bool ableToPickUp = false; //if we can pick up anything
@@ -27,25 +30,38 @@ public class PlayerAction : MonoBehaviour
     public Transform[] spellPrefabs; //spell object to shoot
 
     public float coolDown = 1f;
-    private float _attackCoolDown; //private cooldown to control when to fire
+    private float lastTime = 0f; //last time when we shoot a spell
 
-    private int size = 3; //szie for weaponlist
+    public float prefabRotateOffSet = 180f;
+    public float spellSpawnYOffSet = 4f;
+    public float spellLastTime = 1f;
+
+    public GameObject book;
+    public Material[] materials;
+
+    //AUDIO
+    AudioSource src;
+    public AudioClip pickup;
 
     // Start is called before the first frame update
     void Start()
     {
+        src = GetComponent<AudioSource>();
         //set up weapon list
-        weaponList[0] = new Weapon(WeaponSlot.MAGICSPELL, true);
-        weaponList[1] = new Weapon(WeaponSlot.FIREBALL, false);
-        weaponList[2] = new Weapon(WeaponSlot.WATERSTREAM, false);
-        size = 3;
+        weaponList[0] = new Weapon(WeaponSlot.MAGICSPELL, true, 1);
+        weaponList[1] = new Weapon(WeaponSlot.FIREBALL, false, 2);
+        weaponList[2] = new Weapon(WeaponSlot.LIGHTING, false, 5);
+        weaponList[3] = new Weapon(WeaponSlot.ICE, false, 2);
+        weaponList[4] = new Weapon(WeaponSlot.WATER, false, 2);
 
-        if(PickUpEffectLoc == null)
+        unlockedWeapons.Add(0); //default magic projectile
+        indexUnlokedWeapon = 0;
+
+        if (PickUpEffectLoc == null)
         {
             Debug.LogError("PlayerAction: no pick up effect location found");
         }
 
-        _attackCoolDown = coolDown;
         if (firePoint == null)
         {
             Debug.LogError("PlayerAction: no firepoint found");
@@ -61,50 +77,36 @@ public class PlayerAction : MonoBehaviour
         {
             if (mouseScrollAmt > 0) //switch to next weapon
             {
-                currWeapon++;
-                if (currWeapon >= size) //set currweapon back to 0 if it's out of bound
+                indexUnlokedWeapon++;
+                if(indexUnlokedWeapon >= unlockedWeapons.Count)
                 {
-                    currWeapon = 0;
+                    indexUnlokedWeapon = 0;
                 }
-
-                while (!weaponList[currWeapon].ifUnlocked) //scroll until a unlocked weapon is reached
-                {
-                    currWeapon++;
-                    if (currWeapon >= size) //set currweapon back to 0 if it's out of bound
-                    {
-                        currWeapon = 0;
-                    }
-                }
-            }
-            else //switch to previous weapon
+            } else //switch to previous weapon
             {
-                currWeapon--;
-                if (currWeapon <= 0) //set currweapon back to 0 if it's out of bound
+                indexUnlokedWeapon--;
+                if (indexUnlokedWeapon < 0)
                 {
-                    currWeapon = size-1;
-                }
-
-                while (!weaponList[currWeapon].ifUnlocked) //scroll until a unlocked weapon is reached
-                {
-                    currWeapon--;
-                    if (currWeapon <= 0) //set currweapon back to 0 if it's out of bound
-                    {
-                        currWeapon = size-1;
-                    }
+                    indexUnlokedWeapon = unlockedWeapons.Count-1;
                 }
             }
+            //Debug.Log(indexUnlokedWeapon);
+            currWeapon = unlockedWeapons[indexUnlokedWeapon];
         }
 
         //deal with attacking
-        _attackCoolDown -= Time.deltaTime;
-        if (Input.GetButtonDown("Fire1") && _attackCoolDown <= 0)
+        if (Input.GetButtonDown("Fire1") && (Time.time - lastTime) >= weaponList[currWeapon].coolDown)
         {
-            Debug.Log("PlayerAction: Fire!");
+            //Debug.Log("PlayerAction: Fire!");
             Vector2 mousePos = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
             Vector2 firePointPos = new Vector2(firePoint.position.x, firePoint.position.y);
-            Attack(firePointPos, (mousePos - firePointPos).normalized);
+
+            //angel the spell should face
+            float angel = Mathf.Atan2(mousePos.y - firePoint.position.y, mousePos.x - firePoint.position.x) * (180 / Mathf.PI);
+
+            Attack(firePointPos, (mousePos - firePointPos), angel);
             //after firing, set cool down time back to default;
-            _attackCoolDown = coolDown;
+            lastTime = Time.time;
         }
 
         //deal with picking up
@@ -112,36 +114,99 @@ public class PlayerAction : MonoBehaviour
         {
             GameObject spellToPick = GameObject.FindGameObjectWithTag("Spell");
             PickUpSpell(spellToPick);
+            //disable unused components in spell scroll
+            spellToPick.GetComponent<CheckRange>().enabled = false;
+            spellToPick.transform.GetChild(0).gameObject.SetActive(false);
 
             spellToPick.transform.position = PickUpEffectLoc.transform.position;
-            spellToPick.transform.rotation = PickUpEffectLoc.transform.rotation;
             spellToPick.GetComponent<Animator>().Play("PickUpEffectFadingOut");
 
             Destroy(spellToPick, pickupEffectLastTime);
+            src.PlayOneShot(pickup);
             ableToPickUp = false;
         }
     }
 
     //origin: the point where attacks start. Direction
-    void Attack(Vector2 origin, Vector2 direction)
+    void Attack(Vector2 origin, Vector2 direction, float angel)
     {
         Debug.DrawLine(origin, direction * 100);
+        //Debug.Log(weaponList[currWeapon].weapon.ToString());
 
-        Debug.Log(weaponList[currWeapon].weapon.ToString());
+        Vector3 mousePos = direction + origin;
+        direction = direction.normalized;
 
-        Transform spellClone = Instantiate(spellPrefabs[currWeapon], firePoint.position, firePoint.rotation);
-        spellClone.GetComponent<MoveSpell>().direction = direction;
+        if (currWeapon == 0) //default magic projectile
+        {
+            prefabRotateOffSet = 180;
+            Transform spellClone = Instantiate(spellPrefabs[currWeapon], firePoint.position, Quaternion.Euler(firePoint.rotation.x, firePoint.rotation.y, firePoint.rotation.z + angel + prefabRotateOffSet));
+            spellClone.GetComponent<MoveSpell>().direction = direction;
+            spellClone.GetComponent<Animator>().SetBool("Flying",true);
+        } else if(currWeapon == 1) //fireball
+        {
+            Transform spellClone = Instantiate(spellPrefabs[currWeapon], firePoint.position, firePoint.rotation);
+            spellClone.GetComponent<MoveSpell>().direction = direction;
+            spellClone.GetComponent<Animator>().SetBool("FireRotating", true);
+        } else if(currWeapon == 2)//lightning
+        {
+            Transform spellClone = Instantiate(spellPrefabs[currWeapon], new Vector3(mousePos.x, mousePos.y + spellSpawnYOffSet, 0), firePoint.rotation);
+            spellClone.GetChild(1).GetComponent<Animator>().Play("Lightning");
+            Destroy(spellClone.gameObject, spellLastTime);
+        } else if(currWeapon == 3) //freeze
+        {
+            prefabRotateOffSet = 0;
+            Transform spellClone = Instantiate(spellPrefabs[currWeapon], firePoint.position, Quaternion.Euler(firePoint.rotation.x, firePoint.rotation.y, firePoint.rotation.z + angel + prefabRotateOffSet));
+            spellClone.GetComponent<MoveSpell>().direction = direction;
+            spellClone.GetComponent<Animator>().Play("Freeze");
+        } else //water
+        {
+            prefabRotateOffSet = 180;
+            Transform spellClone = Instantiate(spellPrefabs[currWeapon], firePoint.position, Quaternion.Euler(firePoint.rotation.x, firePoint.rotation.y, firePoint.rotation.z + angel + prefabRotateOffSet));
+            spellClone.GetComponent<MoveSpell>().direction = direction;
+            spellClone.GetComponent<Animator>().SetBool("WaterFloating", true);
+        }
+    }
+
+    public void StopBook()
+    {
+        book.SetActive(false);
     }
 
     void PickUpSpell(GameObject spellToPick)
     {
         switch (spellToPick.name)
         {
-            case "FireBallSpell":
+            case "FireBallScroll":
+                book.SetActive(true);
+                book.GetComponentInChildren<Renderer>().material = materials[0];
+                Invoke("StopBook", 1f);
                 weaponList[1].ifUnlocked = true;
+                unlockedWeapons.Add(1);
+                unlockedWeapons.Sort();
                 break;
-            case "WaterStream":
+            case "LightningScroll":
+                book.SetActive(true);
+                book.GetComponentInChildren<Renderer>().material = materials[1];
+                Invoke("StopBook", 1f);
                 weaponList[2].ifUnlocked = true;
+                unlockedWeapons.Add(2);
+                unlockedWeapons.Sort();
+                break;
+            case "IceScroll":
+                book.SetActive(true);
+                book.GetComponentInChildren<Renderer>().material = materials[2];
+                Invoke("StopBook", 1f);
+                weaponList[3].ifUnlocked = true;
+                unlockedWeapons.Add(3);
+                unlockedWeapons.Sort();
+                break;
+            case "WaterScroll":
+                book.SetActive(true);
+                book.GetComponentInChildren<Renderer>().material = materials[3];
+                Invoke("StopBook", 1f);
+                weaponList[4].ifUnlocked = true;
+                unlockedWeapons.Add(4);
+                unlockedWeapons.Sort();
                 break;
         }
     }

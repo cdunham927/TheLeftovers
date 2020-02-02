@@ -7,7 +7,7 @@ public class Menu : MonoBehaviour
 {
     public void NextLevel()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Main");
     }
 
     public void QuitGame()
@@ -17,6 +17,11 @@ public class Menu : MonoBehaviour
 
     public void Credits()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("Credits");
+    }
+
+    public void Tutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
     }
 }

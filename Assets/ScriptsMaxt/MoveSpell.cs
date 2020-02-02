@@ -37,14 +37,4 @@ public class MoveSpell : MonoBehaviour
             rb.AddForce(direction * force);
         }
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.tag == "Enemy")
-        {
-            Debug.Log("MoveSpell: we hit an enemy");
-            //TODO: deal with effect
-            Destroy(transform.gameObject);
-        }
-    }
 }
