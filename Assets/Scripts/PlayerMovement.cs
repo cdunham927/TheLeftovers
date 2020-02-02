@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
         bod.AddForce(new Vector2(h * speed * Time.deltaTime, 0));
 
-        if (grounded && (Input.GetAxisRaw("Vertical") > 0 || Input.GetKeyDown(KeyCode.Space)))
+        if (grounded && Input.GetKeyDown(KeyCode.Space))
         {
             bod.AddForce(Vector2.up * jumpSpeed);
         }
@@ -36,8 +36,6 @@ public class PlayerMovement : MonoBehaviour
             grounded = true;
         }
         else grounded = false;
-
-        Debug.Log(grounded);
     }
     private void OnDrawGizmos()
     {
